@@ -42,7 +42,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'tipo_documento' => $validated['tipo_documento'],
             'documento' => $validated['documento'],
             'nombre' => $validated['name'],
-            'apellido' => $validated['apellido'] ?? '',
+            'apellido' => $validated['apellido'],
             'email' => $validated['email'],
             'escliente' => true, // Por defecto, al registrarse es cliente
             'esproveedor' => false,
