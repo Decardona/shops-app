@@ -11,12 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        Schema::create('terceros', function (Blueprint $table) {
+            $table->id();
+            $table->enum('tipo_documento', ['CC', 'NIT', 'CE']);
+            $table->string('documento', 15);
+            $table->boolean('escliente')->default(true);
+            $table->boolean('esproveedor')->default(false);
+            $table->string('nombre', 100);
+            $table->string('apellido', 100)->nullable();
+            $table->string('telefono', 15)->nullable();
+            $table->string('email', 100)->nullable();
+            $table->string('direccion', 255)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name', 100);
+            $table->string('apellido', 50)->nullable();
+            $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('rol', ['user', 'guest', 'admin'])->default('guest');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -45,5 +63,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('terceros');
     }
 };
