@@ -1,15 +1,15 @@
 <x-layouts.app>
     <div class="container mx-auto p-6">
         <h1 class="mb-8 text-3xl font-bold text-gray-800">Productos</h1>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {{-- Recorremos los productos y los mostramos en tarjetas --}}
             @foreach ($productos as $producto)
                 <div class="md:h-68 group relative flex h-auto flex-col overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
                     <!-- Header de la tarjeta -->
                     <div class="flex flex-shrink-0 justify-between gap-2 border-b bg-gray-100 p-4">
                         <div class="flex flex-col">
-                            <span class="truncate text-wrap text-lg font-semibold text-gray-800">{{ $producto->nombre }}</span>
-                            <span class="mt-1 text-sm text-gray-500">{{ $producto->marca->nombre ?? 'Sin marca' }}</span>
+                            <span class="truncate text-wrap text-lg font-semibold capitalize text-gray-800">{{ $producto->nombre }}</span>
+                            <span class="mt-1 text-sm capitalize text-gray-500">{{ $producto->marca->nombre ?? 'Sin marca' }}</span>
                         </div>
                         <div>
                             @if ($producto->categoria && $producto->categoria->imagen)
@@ -29,8 +29,8 @@
                     <!-- Contenido de la tarjeta -->
                     <div class="flex flex-1 flex-col space-y-3 p-4">
                         <p class="text-sm text-gray-600"
-                            style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                            {{ Str::limit($producto->descripcion, 120) }}</p>
+                            style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ Str::limit($producto->descripcion, 80) }}</p>
 
                         <div class="mt-auto flex items-center">
                             <span class="mr-2 inline-block h-2 w-2 rounded-full bg-black"></span>
