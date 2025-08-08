@@ -1,6 +1,6 @@
 # Shops App
 
-Aplicación de gestión de productos, categorías y marcas desarrollada en Laravel + Tailwind CSS.
+Aplicación de gestión de productos, ventas y proveedores para tiendas desarrollada en Laravel + Tailwind CSS.
 
 ## Características
 
@@ -15,7 +15,7 @@ Aplicación de gestión de productos, categorías y marcas desarrollada en Larav
 -   PHP >= 8.1
 -   Composer
 -   Node.js y npm
--   Laravel 10+
+-   Laravel 12+
 -   Base de datos MySQL o SQLite
 
 ## Instalación
