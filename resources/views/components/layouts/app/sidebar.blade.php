@@ -6,7 +6,13 @@
                 'url' => 'dashboard',
                 'label' => __('Dashboard'),
                 'current' => request()->routeIs('dashboard'),
-                'visibility' => ['user', 'admin', 'guest'],
+                'visibility' => ['user', 'admin'],
+            ],
+            [
+                'icon' => 'shopping-bag',
+                'url' => 'productos.index',
+                'label' => __('Productos'),
+                'current' => request()->routeIs('productos.index'),
             ],
         ],
         // 'Acceso y Usuarios' => [
