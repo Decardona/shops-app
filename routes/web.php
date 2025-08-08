@@ -14,6 +14,7 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
+    Route::get('vitrina', [ProductoController::class, 'list'])->name('vitrina');
     Route::resource('productos', ProductoController::class);
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');

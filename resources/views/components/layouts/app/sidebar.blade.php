@@ -1,6 +1,6 @@
 @php
     $groups = [
-        'Platform' => [
+        'Administración' => [
             [
                 'icon' => 'home',
                 'url' => 'dashboard',
@@ -13,24 +13,18 @@
                 'url' => 'productos.index',
                 'label' => __('Productos'),
                 'current' => request()->routeIs('productos.index'),
+                'visibility' => ['user', 'admin'],
+            ]
+            
+        ],
+        'Shops' => [
+            [
+                'icon' => 'inbox-stack',
+                'url' => 'vitrina',
+                'label' => __('Vitrina'),
+                'current' => request()->routeIs('vitrina'),
             ],
         ],
-        // 'Acceso y Usuarios' => [
-        //     [
-        //         'icon' => 'user',
-        //         'url' => 'users.index',
-        //         'label' => __('Users'),
-        //         'current' => request()->routeIs('users.index'),
-        //         'visibility' => ['admin'],
-        //     ],
-        //     [
-        //         'icon' => 'user-plus',
-        //         'url' => 'users.create',
-        //         'label' => __('Create User'),
-        //         'current' => request()->routeIs('users.create'),
-        //         'visibility' => ['admin'],
-        //     ],
-        // ],
     ];
 @endphp
 
@@ -46,7 +40,7 @@
     <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-        <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+        <a href="{{ route('productos.index') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
             <x-app-logo />
         </a>
 

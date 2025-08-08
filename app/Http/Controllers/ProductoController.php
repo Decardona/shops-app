@@ -17,6 +17,13 @@ class ProductoController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        return view('app.productos.list', [
+            'productos' => Producto::all(),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

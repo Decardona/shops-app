@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 255);
             $table->text('descripcion')->nullable();
+            $table->string('imagen')->nullable();
             $table->string('sku', 100)->unique()->nullable();
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('marca_id');

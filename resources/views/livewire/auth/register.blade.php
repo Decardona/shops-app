@@ -53,7 +53,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         Auth::login($user);
 
-        $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(route('productos.index', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -85,7 +85,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         <flux:input wire:model="password_confirmation" :label="__('Confirm password')" type="password" required autocomplete="new-password"
             :placeholder="__('Confirm password')" viewable />
 
-        <div class="mt-2 flex items-center justify-end">
+        <div class="mt-4 flex items-center justify-end">
             <flux:button type="submit" variant="primary" class="w-full">
                 {{ __('Regístrame') }}
             </flux:button>

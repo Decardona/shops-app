@@ -1,5 +1,5 @@
 {
-    "tabWidth": 4,
+    "tabWidth": 2,
     "useTabs": false,
     "semi": true,
     "singleQuote": true,
@@ -12,7 +12,7 @@
         {
             "files": ["*.blade.php"],
             "options": {
-                "tabWidth": 4,
+                "tabWidth": 2,
                 "parser": "html",
                 "htmlWhitespaceSensitivity": "ignore"
             }
@@ -20,7 +20,7 @@
         {
             "files": ["*.php"],
             "options": {
-                "tabWidth": 4,
+                "tabWidth": 2,
                 "parser": "php"
             }
         }

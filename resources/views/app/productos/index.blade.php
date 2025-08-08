@@ -1,54 +1,93 @@
 <x-layouts.app>
-    <div class="container mx-auto p-6">
-        <h1 class="mb-8 text-3xl font-bold text-gray-800">Productos</h1>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {{-- Recorremos los productos y los mostramos en tarjetas --}}
-            @foreach ($productos as $producto)
-                <div class="md:h-68 group relative flex h-auto flex-col overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg">
-                    <!-- Header de la tarjeta -->
-                    <div class="flex flex-shrink-0 justify-between gap-2 border-b bg-gray-100 p-4">
-                        <div class="flex flex-col">
-                            <span class="truncate text-wrap text-lg font-semibold capitalize text-gray-800">{{ $producto->nombre }}</span>
-                            <span class="mt-1 text-sm capitalize text-gray-500">{{ $producto->marca->nombre ?? 'Sin marca' }}</span>
-                        </div>
-                        <div>
-                            @if ($producto->categoria && $producto->categoria->imagen)
-                                <img src="{{ asset($producto->categoria->imagen) }}" alt="Imagen categoría"
-                                    class="h-13 w-13 rounded-full border-2 border-gray-200 object-cover shadow-md transition-transform duration-300 group-hover:scale-110" />
-                            @else
-                                <div class="h-13 w-13 flex items-center justify-center rounded-full bg-gray-200">
-                                    <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
 
-                    <!-- Contenido de la tarjeta -->
-                    <div class="flex flex-1 flex-col space-y-3 p-4">
-                        <p class="text-sm text-gray-600"
-                            style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                            {{ Str::limit($producto->descripcion, 80) }}</p>
+  <div class="relative h-full">
+    <flux:breadcrumbs>
+      <flux:breadcrumbs.item :href="route('productos.index')" :current="true">
+        {{ __('Productos') }}
+      </flux:breadcrumbs.item>
+    </flux:breadcrumbs>
 
-                        <div class="mt-auto flex items-center">
-                            <span class="mr-2 inline-block h-2 w-2 rounded-full bg-black"></span>
-                            <span class="text-xs font-medium text-black">{{ $producto->categoria->nombre ?? 'Sin categoría' }}</span>
-                        </div>
+    <div class="relative mt-6 overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+        <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Nombre
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Marca
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Categoría
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Precio
+            </th>
+            <th scope="col" class="px-6 py-3">
+              SKU
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Existencia
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
 
-
-                    </div>
-
-                    <!-- Footer de la tarjeta -->
-                    <div class="flex-shrink-0 border-t bg-gray-50 px-4 py-3">
-                        <button
-                            class="w-full cursor-pointer rounded bg-yellow-500 px-4 py-2 text-sm font-medium text-black transition-colors duration-200 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2">
-                            Ver detalles
-                        </button>
-                    </div>
+          @foreach ($productos as $producto)
+            <tr
+              class="border-b border-gray-200 bg-white hover:bg-gray-300/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+              <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium uppercase text-black dark:text-white">
+                <a href="{{ route('productos.show', $producto) }}"
+                  class="hover:font-bold hover:text-yellow-500 hover:underline">
+                  {{ $producto->nombre }}
+                </a>
+              </th>
+              <td class="px-6 py-4">
+                {{ $producto->marca->nombre ?? '-' }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $producto->categoria->nombre ?? '-' }}
+              </td>
+              <td class="px-6 py-4">
+                ${{ number_format($producto->precio, 0, ',', '.') }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $producto->sku }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $producto->existencia }}
+              </td>
+              <td class="px-6 py-4 text-right">
+                <div class="flex flex-row gap-4">
+                  <a href="{{ route('productos.edit', $producto) }}"
+                    class="flex items-center gap-1 rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-500 dark:text-blue-500">
+                    <flux:icon name="pencil" class="h-4 w-4" />
+                    Editar
+                  </a>
+                  {{-- <a href="{{ route('productos.show', $producto) }}"
+                  class="rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-500 dark:text-blue-500">Ver
+                  Detalles</a> --}}
+                  <button
+                    class="flex cursor-pointer items-center gap-1 rounded-md bg-black px-2 py-1 font-medium text-white shadow-md hover:bg-gray-700 dark:text-blue-500">
+                    <flux:icon name="trash" class="h-4 w-4" />
+                    Eliminar
+                  </button>
                 </div>
-            @endforeach
-        </div>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
+    <div class="fixed bottom-8 right-4 z-10">
+      <button
+        class="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-yellow-400 text-2xl font-extrabold text-black shadow-md transition-colors duration-200 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2">
+        <flux:icon name="plus" class="h-6 w-6" />
+      </button>
+    </div>
+  </div>
+
 </x-layouts.app>
