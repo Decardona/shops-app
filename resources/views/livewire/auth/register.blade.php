@@ -58,43 +58,47 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-4">
-    <x-auth-header :title="__('Regístrate')" :description="__('Ingresa los detalles a continuación')" />
+  <x-auth-header :title="__('Regístrate')" :description="__('Ingresa los detalles a continuación')" />
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+  <!-- Session Status -->
+  <x-auth-session-status class="text-center" :status="session('status')" />
 
-    <form wire:submit="register" class="flex flex-col gap-3">
-        {{-- tipo de documento --}}
-        <x-flux.tipo_documentos name="tipo_documento" label="Tipo de documento" wire:model="tipo_documento" :selected="$tipo_documento" />
-        {{-- documento --}}
-        <flux:input wire:model="documento" :label="__('Número de documento')" type="text" />
+  <form wire:submit="register" class="flex flex-col gap-3">
+    {{-- tipo de documento --}}
+    <x-propios.tipo_documentos name="tipo_documento" label="Tipo de documento" wire:model="tipo_documento"
+      :selected="$tipo_documento" />
+    {{-- documento --}}
+    <flux:input wire:model="documento" :label="__('Número de documento')" type="text" />
 
-        <!-- Name -->
-        <flux:input wire:model="name" :label="__('Nombre')" type="text" required autofocus autocomplete="name" :placeholder="__('Nombre')" />
-        {{-- Apellidos --}}
-        <flux:input wire:model="apellido" :label="__('Apellido')" type="text" autofocus autocomplete="apellido" :placeholder="__('Apellido')" />
+    <!-- Name -->
+    <flux:input wire:model="name" :label="__('Nombre')" type="text" required autofocus autocomplete="name"
+      :placeholder="__('Nombre')" />
+    {{-- Apellidos --}}
+    <flux:input wire:model="apellido" :label="__('Apellido')" type="text" autofocus autocomplete="apellido"
+      :placeholder="__('Apellido')" />
 
-        <!-- Email Address -->
-        <flux:input wire:model="email" :label="__('Email address')" type="email" required autocomplete="email" placeholder="email@example.com" />
+    <!-- Email Address -->
+    <flux:input wire:model="email" :label="__('Email address')" type="email" required autocomplete="email"
+      placeholder="email@example.com" />
 
-        <!-- Password -->
-        <flux:input wire:model="password" :label="__('Password')" type="password" required autocomplete="new-password" :placeholder="__('Password')"
-            viewable />
+    <!-- Password -->
+    <flux:input wire:model="password" :label="__('Password')" type="password" required autocomplete="new-password"
+      :placeholder="__('Password')" viewable />
 
-        <!-- Confirm Password -->
-        <flux:input wire:model="password_confirmation" :label="__('Confirm password')" type="password" required autocomplete="new-password"
-            :placeholder="__('Confirm password')" viewable />
+    <!-- Confirm Password -->
+    <flux:input wire:model="password_confirmation" :label="__('Confirm password')" type="password" required
+      autocomplete="new-password" :placeholder="__('Confirm password')" viewable />
 
-        <div class="mt-4 flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
-                {{ __('Regístrame') }}
-            </flux:button>
-        </div>
-    </form>
-
-    <div class="space-x-1 text-center text-sm text-zinc-600 rtl:space-x-reverse dark:text-zinc-400">
-        <span>{{ __('¿Ya tienes cuenta?') }}</span>
-        <flux:link :href="route('login')" wire:navigate>
-            {{ __('Inicia sesión') }}</flux:link>
+    <div class="mt-4 flex items-center justify-end">
+      <flux:button type="submit" variant="primary" class="w-full">
+        {{ __('Regístrame') }}
+      </flux:button>
     </div>
+  </form>
+
+  <div class="space-x-1 text-center text-sm text-zinc-600 rtl:space-x-reverse dark:text-zinc-400">
+    <span>{{ __('¿Ya tienes cuenta?') }}</span>
+    <flux:link :href="route('login')" wire:navigate>
+      {{ __('Inicia sesión') }}</flux:link>
+  </div>
 </div>

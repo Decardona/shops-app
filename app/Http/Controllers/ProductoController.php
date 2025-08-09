@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
+use App\Models\Marca;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+
 
 class ProductoController extends Controller
 {
@@ -13,7 +16,7 @@ class ProductoController extends Controller
     public function index()
     {
         return view('app.productos.index', [
-            'productos' => Producto::all(),
+            'productos' => Producto::orderBy('id', 'desc')->get(),
         ]);
     }
 
@@ -29,7 +32,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        // $categorias = Categoria::all()->orderBy('nombre')->get();
+        // $marcas = Marca::all()->orderBy('nombre')->get();
+
+        return view('app.productos.create');
     }
 
     /**
@@ -37,7 +43,19 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'sku' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1000',
+            'precio' => 'required|numeric|min:0',
+            'existencia' => 'required|integer|min:0',
+            'categoria_id' => 'required|exists:categorias,id',
+            'marca_id' => 'required|exists:marcas,id',
+        ]);
+
+        $producto = Producto::create($request->all());
+
+        return redirect()->route('productos.edit', $producto)->with('success', 'Producto creado exitosamente.');
     }
 
     /**
@@ -53,7 +71,7 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        return view('app.productos.edit', compact('producto'));
     }
 
     /**
