@@ -12,7 +12,7 @@
               'icon' => 'shopping-bag',
               'url' => 'productos.index',
               'label' => __('Productos'),
-              'current' => request()->routeIs('productos.index'),
+              'current' => request()->routeIs('productos.*'),
               'visibility' => ['user', 'admin'],
           ],
       ],
@@ -21,7 +21,7 @@
               'icon' => 'inbox-stack',
               'url' => 'vitrina',
               'label' => __('Vitrina'),
-              'current' => request()->routeIs('vitrina'),
+              'current' => request()->routeIs('vitrina.*'),
           ],
       ],
   ];
