@@ -51,6 +51,8 @@ class ProductoController extends Controller
             'existencia' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
             'marca_id' => 'required|exists:marcas,id',
+            'activo' => 'required|boolean',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $producto = Producto::create($request->all());
