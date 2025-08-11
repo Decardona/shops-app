@@ -95,10 +95,10 @@
             Swal.fire({
               title: `¿Deseas eliminar ${form.closest('tr').querySelector('th a').textContent.trim()}?`,
               text: "No podrás revertir esto.",
-              icon: "warning",
+              icon: "question",
               showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
+              confirmButtonColor: "#f0b100",
+              cancelButtonColor: "#000",
               cancelButtonText: "Cancelar",
               confirmButtonText: "Sí, eliminarlo"
             }).then((result) => {
