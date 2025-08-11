@@ -45,7 +45,8 @@
           <!-- Footer de la tarjeta -->
           <div class="flex-shrink-0 border-t bg-gray-50 px-4 py-3">
             <button
-              class="w-full cursor-pointer rounded bg-yellow-400 px-4 py-2 text-sm font-medium text-black transition-colors duration-200 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2">
+              class="w-full cursor-pointer rounded bg-yellow-400 px-4 py-2 text-sm font-medium text-black transition-colors duration-200 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
+              onclick="location.href='{{ route('productos.show', $producto) }}'">
               Ver detalles
             </button>
           </div>

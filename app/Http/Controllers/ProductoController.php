@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductoController extends Controller
@@ -52,8 +53,14 @@ class ProductoController extends Controller
             'categoria_id' => 'required|exists:categorias,id',
             'marca_id' => 'required|exists:marcas,id',
             'activo' => 'required|boolean',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen' => 'nullable|string|max:255'
         ]);
+
+        if ($request->hasFile('imagen_file')) {
+            $path = $request->file('imagen_file')->store('products', 'public');
+            $request->merge(['imagen' => basename($path)]);
+        }
 
         $producto = Producto::create($request->all());
 
@@ -65,7 +72,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('app.productos.view', compact('producto'));
     }
 
     /**
@@ -81,7 +88,30 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'sku' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:1000',
+            'precio' => 'required|numeric|min:0',
+            'existencia' => 'required|integer|min:0',
+            'categoria_id' => 'required|exists:categorias,id',
+            'marca_id' => 'required|exists:marcas,id',
+            'activo' => 'required|boolean',
+            'imagen_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen' => 'nullable|string|max:255'
+        ]);
+
+        if ($request->hasFile('imagen_file')) {
+            $path = $request->file('imagen_file')->store('products', 'public');
+            $request->merge(['imagen' => basename($path)]);
+            if ($producto->imagen) {
+                Storage::disk('public')->delete('products/' . $producto->imagen);
+            }
+        }
+
+        $producto->update($request->all());
+
+        return redirect()->route('productos.edit', $producto)->with('success', 'Producto actualizado exitosamente.');
     }
 
     /**
@@ -89,6 +119,12 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        if ($producto->imagen) {
+            Storage::disk('public')->delete('products/' . $producto->imagen);
+        }
+
+        $producto->delete();
+
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
     }
 }

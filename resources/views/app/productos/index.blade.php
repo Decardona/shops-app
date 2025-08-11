@@ -68,10 +68,14 @@
                 {{-- <a href="{{ route('productos.show', $producto) }}"
                   class="rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-500 dark:text-blue-500">Ver
                   Detalles</a> --}}
-                <button class="btn-secundary-grid flex items-center gap-1">
-                  <flux:icon name="trash" class="h-4 w-4" />
-                  Eliminar
-                </button>
+                <form action="{{ route('productos.destroy', $producto) }}" method="POST" class="delete-form">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn-secundary-grid flex items-center gap-1">
+                    <flux:icon name="trash" class="h-4 w-4" />
+                    Eliminar
+                  </button>
+                </form>
               </div>
             </td>
           </tr>
@@ -80,5 +84,32 @@
     </table>
   </div>
   <x-propios.floating-add-button url="{{ route('productos.create') }}" />
+
+  @push('js')
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach(form => {
+          form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            Swal.fire({
+              title: `¿Deseas eliminar ${form.closest('tr').querySelector('th a').textContent.trim()}?`,
+              text: "No podrás revertir esto.",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              cancelButtonText: "Cancelar",
+              confirmButtonText: "Sí, eliminarlo"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                form.submit();
+              }
+            });
+          });
+        });
+      });
+    </script>
+  @endpush
 
 </x-layouts.app>

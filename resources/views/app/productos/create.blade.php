@@ -14,33 +14,32 @@
     {{-- <p class="mt-2 text-gray-600">{{ __('Ingresa los detalles del nuevo producto a continuación.') }}</p> --}}
   </div>
 
-  <div class="mt-4 rounded-md p-7 shadow-md">
+  <div class="mt-4 rounded-md p-4 shadow-md md:p-10">
     <form action="{{ route('productos.store') }}" method="POST" class="grid grid-cols-1 space-y-4 md:grid-cols-2 md:gap-3"
       enctype="multipart/form-data">
       @csrf
 
 
 
-      <div class="grid grid-cols-2 gap-2 md:col-span-2">
-        <div class="relative">
-          <div class="absolute left-4 top-0">
+      <div class="grid grid-cols-1 gap-4 md:col-span-2 md:grid-cols-2 md:gap-6">
+        <div class="relative rounded-md">
+          <div class="absolute left-3 top-3">
             <label class="cursor-pointer">
               <flux:tooltip title="Subir Imagen">
                 <div class="flex flex-row items-center justify-center gap-1">
                   <flux:icon name="arrow-up-tray"
-                    class="h-10 w-10 rounded-md bg-gray-100 p-2 font-bold shadow-md transition-colors hover:bg-black hover:text-white">
+                    class="h-5 w-5 rounded-md bg-gray-100 p-2 font-bold shadow-md transition-colors hover:bg-black hover:text-white md:h-10 md:w-10">
                     {{ __('Subir Imagen') }}
                   </flux:icon>
-                  {{-- <span class="rounded-md bg-black p-2 text-white">Subir Imagen</span> --}}
                 </div>
-                <input type="file" name="imagen" accept="image/*" class="hidden" />
+                <input type="file" name="imagen_file" id="input-imagen" accept="image/*" class="hidden" />
               </flux:tooltip>
             </label>
           </div>
-          <img src="{{ old('imagen', asset('noimageproduct.png')) }}" alt="Imagen del producto"
+          <img id="preview-imagen" src="{{ old('imagen', asset('noimageproduct.png')) }}" alt="Imagen del producto"
             class="aspect-video w-full object-cover object-center" />
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="mt-4 flex flex-col gap-3 md:mt-0">
           <div class="flex justify-end md:col-span-2">
             <flux:radio.group name="activo" variant="segmented">
               <flux:radio label="Activo" icon="check" value="1" :checked="old('activo') == 1" />
@@ -79,4 +78,18 @@
     </form>
   </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const input = document.getElementById('input-imagen');
+      const preview = document.getElementById('preview-imagen');
+      if (input && preview) {
+        input.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            preview.src = URL.createObjectURL(file);
+          }
+        });
+      }
+    });
+  </script>
 </x-layouts.app>
