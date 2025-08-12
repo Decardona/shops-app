@@ -45,8 +45,8 @@
 
             if (typeof window.Swal !== 'undefined') {
               window.Swal.fire({
-                title: '¿Confirmar eliminación?',
-                html: `¿Estás seguro de que deseas eliminar <strong>${itemName}</strong>?`,
+                title: 'Confirmar eliminación',
+                html: `¿Deseas eliminar <strong>${itemName}</strong>?`,
                 text: "Esta acción no se puede deshacer.",
                 icon: "warning",
                 showCancelButton: true,
