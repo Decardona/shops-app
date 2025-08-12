@@ -100,31 +100,6 @@
   </div>
   <x-propios.floating-add-button url="{{ route('productos.create') }}" />
 
-  @push('js')
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const deleteForms = document.querySelectorAll('.delete-form');
-        deleteForms.forEach(form => {
-          form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            Swal.fire({
-              title: `¿Deseas eliminar ${form.closest('tr').querySelector('th a').textContent.trim()}?`,
-              text: "No podrás revertir esto.",
-              icon: "question",
-              showCancelButton: true,
-              confirmButtonColor: "#f0b100",
-              cancelButtonColor: "#000",
-              cancelButtonText: "Cancelar",
-              confirmButtonText: "Sí, eliminarlo"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                form.submit();
-              }
-            });
-          });
-        });
-      });
-    </script>
-  @endpush
+  {{-- Los formularios con clase 'delete-form' se configuran automáticamente --}}
 
 </x-layouts.app>
