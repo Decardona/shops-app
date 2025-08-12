@@ -7,7 +7,7 @@
   </flux:breadcrumbs>
 
   <form method="GET" action="{{ route('productos.index') }}">
-    <div class="my-6 flex w-1/3 flex-row gap-4">
+    <div class="my-6 flex w-full flex-row gap-4 md:w-1/3">
       <div
         class="relative flex w-full flex-row items-center rounded-md border border-gray-300 bg-white p-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
         <flux:icon name="magnifying-glass" class="absolute left-3 top-3 h-5 w-5 text-gray-500" />
