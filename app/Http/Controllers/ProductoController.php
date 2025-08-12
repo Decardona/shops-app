@@ -17,14 +17,15 @@ class ProductoController extends Controller
     public function index()
     {
         return view('app.productos.index', [
-            'productos' => Producto::orderBy('id', 'desc')->get(),
+            'productos' => Producto::orderBy('id', 'desc')->paginate(),
         ]);
     }
 
     public function list()
     {
+        $vitrina = Producto::where('activo', true)->orderBy('nombre', 'asc')->paginate();
         return view('app.productos.list', [
-            'productos' => Producto::all(),
+            'productos' => $vitrina,
         ]);
     }
 
@@ -48,7 +49,7 @@ class ProductoController extends Controller
             'nombre' => 'required|string|max:255',
             'sku' => 'required|string|max:255',
             'descripcion' => 'required|string|max:1000',
-            'precio' => 'required|numeric|min:0',
+            'precio' => 'required|numeric|min:0|max:99999999.99',
             'existencia' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
             'marca_id' => 'required|exists:marcas,id',

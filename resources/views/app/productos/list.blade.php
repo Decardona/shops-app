@@ -1,6 +1,17 @@
 <x-layouts.app>
-  <div class="container mx-auto p-6">
+  <div class="mx-auto p-6">
     <h1 class="mb-8 text-3xl font-bold text-gray-800">Productos</h1>
+    <form method="GET" action="{{ route('productos.index') }}">
+      <div class="mb-6 flex w-1/3 flex-row gap-4">
+        <div
+          class="relative flex w-full flex-row items-center rounded-md border border-gray-300 bg-white p-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
+          <flux:icon name="magnifying-glass" class="absolute left-3 top-3 h-5 w-5 text-gray-500" />
+          <input type="text" name="q" placeholder="Buscar producto..." class="w-full pl-8 focus:outline-none"
+            value="{{ request('q') }}" />
+        </div>
+        <button type="submit" class="btn-secundary">Buscar</button>
+      </div>
+    </form>
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       {{-- Recorremos los productos y los mostramos en tarjetas --}}
       @foreach ($productos as $producto)
@@ -15,15 +26,13 @@
             </div>
             <div>
               @if ($producto->categoria && $producto->categoria->imagen)
-                <img src="{{ asset($producto->categoria->imagen) }}" alt="Imagen categoría"
+                <img
+                  src="{{ $producto->imagen ? asset('storage/products/' . $producto->imagen) : asset($producto->categoria->imagen) }}"
+                  alt="Imagen categoría"
                   class="h-13 w-13 rounded-full border-2 border-gray-200 object-cover shadow-md transition-transform duration-300 group-hover:scale-110" />
               @else
-                <div class="h-13 w-13 flex items-center justify-center rounded-full bg-gray-200">
-                  <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
+                <img src="{{ asset('noimageproduct.png') }}" alt="Imagen categoría"
+                  class="h-13 w-13 rounded-full border-2 border-gray-200 object-cover shadow-md transition-transform duration-300 group-hover:scale-110" />
               @endif
             </div>
           </div>
@@ -34,24 +43,27 @@
               style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
               {{ Str::limit($producto->descripcion, 80) }}</p>
 
-            <div class="mt-auto flex items-center">
-              <span class="mr-2 inline-block h-2 w-2 rounded-full bg-black"></span>
-              <span class="text-xs font-medium text-black">{{ $producto->categoria->nombre ?? 'Sin categoría' }}</span>
+            <div class="mt-auto flex flex-row items-center md:justify-between">
+              <div class="hidden md:block">
+                <span class="mr-2 inline-block h-2 w-2 rounded-full bg-black"></span>
+                <span
+                  class="text-xs font-medium text-black">{{ $producto->categoria->nombre ?? 'Sin categoría' }}</span>
+              </div>
+              <span class="font-bold text-black">${{ number_format($producto->precio, 2, '.', ',') }}</span>
             </div>
-
-
           </div>
 
           <!-- Footer de la tarjeta -->
           <div class="flex-shrink-0 border-t bg-gray-50 px-4 py-3">
-            <button
-              class="w-full cursor-pointer rounded bg-yellow-400 px-4 py-2 text-sm font-medium text-black transition-colors duration-200 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
-              onclick="location.href='{{ route('productos.show', $producto) }}'">
+            <button class="btn-primary w-full" onclick="location.href='{{ route('productos.show', $producto) }}'">
               Ver detalles
             </button>
           </div>
         </div>
       @endforeach
+    </div>
+    <div class="mt-3">
+      {{ $productos->links() }}
     </div>
   </div>
 </x-layouts.app>

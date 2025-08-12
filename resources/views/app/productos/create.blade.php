@@ -36,7 +36,7 @@
               </flux:tooltip>
             </label>
           </div>
-          <img id="preview-imagen" src="{{ old('imagen', asset('noimageproduct.png')) }}" alt="Imagen del producto"
+          <img id="preview-imagen" src="{{ old('imagen_file', asset('noimageproduct.png')) }}" alt="Imagen del producto"
             class="aspect-video w-full object-cover object-center" />
         </div>
         <div class="mt-4 flex flex-col gap-3 md:mt-0">
@@ -46,9 +46,9 @@
               <flux:radio label="Inactivo" icon="x-mark" value="0" :checked="old('activo') == 0" />
             </flux:radio.group>
           </div>
-          <x-propios.categorias :selected="$categoriaSeleccionada ?? null" name="categoria_id" />
+          <x-propios.categorias :selected="old('categoria_id') ?? null" name="categoria_id" />
 
-          <x-propios.marcas :selected="$marcaSeleccionada ?? ''" name="marca_id" />
+          <x-propios.marcas :selected="old('marca_id') ?? ''" name="marca_id" />
 
           <flux:input name="nombre" label="{{ __('Nombre del Producto') }}" :value="old('nombre')" type="text"
             required />
@@ -63,14 +63,12 @@
 
         </div>
       </div>
-
-
       <div class="md:col-span-2">
         <flux:textarea name="descripcion" label="{{ __('Descripción') }}" placeholder="Escribe una descripción"
-          rows="3" resize="none" :value="old('descripcion')" required />
+          rows="3" resize="none" required>
+          {{ old('descripcion') }}
+        </flux:textarea>
       </div>
-
-
 
       <div class="mt-4 flex justify-end md:col-span-2">
         <button type="submit" class="btn-primary">{{ __('Crear Producto') }}</button>

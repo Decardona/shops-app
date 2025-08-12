@@ -53,7 +53,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         Auth::login($user);
 
-        $this->redirectIntended(route('productos.index', absolute: false), navigate: true);
+        $this->redirectIntended(route('vitrina', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -90,7 +90,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
       autocomplete="new-password" :placeholder="__('Confirm password')" viewable />
 
     <div class="mt-4 flex items-center justify-end">
-      <flux:button type="submit" variant="primary" class="w-full">
+      <flux:button type="submit" variant="primary" class="w-full cursor-pointer">
         {{ __('Regístrame') }}
       </flux:button>
     </div>

@@ -21,7 +21,7 @@
               'icon' => 'inbox-stack',
               'url' => 'vitrina',
               'label' => __('Vitrina'),
-              'current' => request()->routeIs('vitrina.*'),
+              'current' => request()->routeIs('vitrina'),
           ],
       ],
   ];
