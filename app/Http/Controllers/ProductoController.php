@@ -17,13 +17,26 @@ class ProductoController extends Controller
     public function index()
     {
         return view('app.productos.index', [
-            'productos' => Producto::orderBy('id', 'desc')->paginate(),
+            'productos' => Producto::orderBy('id', 'desc')
+            ->orWhere('nombre', 'like', '%' . request('q') . '%')
+            ->orWhere('descripcion', 'like', '%' . request('q') . '%')
+            ->orWhere('sku', 'like', '%' . request('q') . '%')
+            ->paginate(10),
         ]);
     }
 
     public function list()
     {
-        $vitrina = Producto::where('activo', true)->orderBy('nombre', 'asc')->paginate();
+        $vitrina = Producto::where('activo', true)
+            ->where(function($query) {
+                $q = request('q');
+                if ($q) {
+                    $query->where('nombre', 'like', "%$q%")
+                          ->orWhere('descripcion', 'like', "%$q%");
+                }
+            })
+            ->orderBy('nombre', 'asc')
+            ->paginate(8);
         return view('app.productos.list', [
             'productos' => $vitrina,
         ]);

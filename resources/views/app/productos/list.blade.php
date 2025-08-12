@@ -1,7 +1,7 @@
 <x-layouts.app>
   <div class="mx-auto p-6">
     <h1 class="mb-8 text-3xl font-bold text-gray-800">Productos</h1>
-    <form method="GET" action="{{ route('productos.index') }}">
+    <form method="GET" action="{{ route('vitrina') }}">
       <div class="mb-6 flex w-1/3 flex-row gap-4">
         <div
           class="relative flex w-full flex-row items-center rounded-md border border-gray-300 bg-white p-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
@@ -63,7 +63,7 @@
       @endforeach
     </div>
     <div class="mt-3">
-      {{ $productos->links() }}
+      {{ $productos->links('vendor.pagination.tailwind') }}
     </div>
   </div>
 </x-layouts.app>

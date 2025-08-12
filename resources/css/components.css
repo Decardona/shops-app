@@ -3,7 +3,7 @@
 }
 
 .btn-primary-grid {
-    @apply cursor-pointer rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-500 dark:text-blue-500 hover:shadow-lg;
+    @apply cursor-pointer rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-400/50 dark:text-blue-500 hover:shadow-lg;
 }
 
 .btn-secundary {
@@ -11,5 +11,5 @@
 }
 
 .btn-primary {
-    @apply cursor-pointer rounded-md bg-yellow-400 py-2 px-3 font-bold text-black shadow-md hover:bg-yellow-500 dark:text-blue-500 hover:shadow-lg;
+    @apply cursor-pointer rounded-md bg-yellow-400 py-2 px-3 font-bold text-black shadow-md hover:bg-yellow-400/50 dark:text-blue-500 hover:shadow-lg;
 }

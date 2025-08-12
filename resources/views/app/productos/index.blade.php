@@ -96,7 +96,7 @@
     </table>
   </div>
   <div class="mt-3">
-    {{ $productos->links() }}
+    {{ $productos->links('vendor.pagination.tailwind') }}
   </div>
   <x-propios.floating-add-button url="{{ route('productos.create') }}" />
 
