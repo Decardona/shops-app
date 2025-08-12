@@ -19,13 +19,11 @@
       enctype="multipart/form-data">
       @csrf
 
-
-
       <div class="grid grid-cols-1 gap-4 md:col-span-2 md:grid-cols-2 md:gap-6">
         <div class="relative rounded-md">
           <div class="absolute left-3 top-3">
             <label class="cursor-pointer">
-              <flux:tooltip title="Subir Imagen">
+              <flux:tooltip content="Subir Imagen">
                 <div class="flex flex-row items-center justify-center gap-1">
                   <flux:icon name="arrow-up-tray"
                     class="h-5 w-5 rounded-md bg-gray-100 p-2 font-bold shadow-md transition-colors hover:bg-black hover:text-white md:h-10 md:w-10">

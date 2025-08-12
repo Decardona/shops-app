@@ -23,7 +23,7 @@
         <div class="relative rounded-md">
           <div class="absolute left-3 top-3">
             <label class="cursor-pointer">
-              <flux:tooltip title="Subir Imagen">
+              <flux:tooltip content="Subir Imagen">
                 <div class="flex flex-row items-center justify-center gap-1">
                   <flux:icon name="arrow-up-tray"
                     class="h-6 w-6 rounded-md bg-gray-100 p-1 font-bold shadow-md transition-colors hover:bg-black hover:text-white md:h-10 md:w-10 md:p-2">
