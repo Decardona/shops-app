@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedoresController;
+use App\Http\Controllers\TerceroController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -16,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
     Route::get('vitrina', [ProductoController::class, 'list'])->name('vitrina');
     Route::resource('productos', ProductoController::class);
+    Route::resource('terceros', TerceroController::class);
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

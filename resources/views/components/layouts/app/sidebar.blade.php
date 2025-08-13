@@ -15,6 +15,13 @@
               'current' => request()->routeIs('productos.*'),
               'visibility' => ['user', 'admin'],
           ],
+          [
+              'icon' => 'user-group',
+              'url' => 'terceros.index',
+              'label' => __('Terceros'),
+              'current' => request()->routeIs('terceros.*'),
+              'visibility' => ['user', 'admin'],
+          ],
       ],
       'Shops' => [
           [
