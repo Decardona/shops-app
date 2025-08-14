@@ -59,8 +59,8 @@ class BuscarProducto extends Component
     {
         $producto = Producto::find($id);
         if ($producto) {
-            // Evitar duplicados
-            if (!collect($this->productosSeleccionados)->contains('id', $producto->id)) {
+            $index = collect($this->productosSeleccionados)->search(fn($item) => $item['id'] === $producto->id);
+            if ($index === false) {
                 $this->productosSeleccionados[] = [
                     'id' => $producto->id,
                     'nombre' => $producto->nombre,
@@ -69,6 +69,9 @@ class BuscarProducto extends Component
                     'cantidad' => 1,
                     'subtotal' => $producto->precio,
                 ];
+            } else {
+                $this->productosSeleccionados[$index]['cantidad']++;
+                $this->productosSeleccionados[$index]['subtotal'] = $this->productosSeleccionados[$index]['precio'] * $this->productosSeleccionados[$index]['cantidad'];
             }
         }
         $this->search = '';

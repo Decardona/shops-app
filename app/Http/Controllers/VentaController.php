@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Venta;
+use App\Models\VentaDetalle;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -53,6 +56,30 @@ class VentaController extends Controller
             return redirect()->back()->with(['error' => implode(', ', $errores)]);
         }
 
-        return redirect()->route('ventas.index')->with('success', 'Venta registrada exitosamente.');
+        DB::transaction(function() use ($data, $productos) {
+            $venta = new Venta();
+            $venta->tercero_id = $data['tercero_id'];
+            $venta->total = array_reduce($productos, function($carry, $prod) {
+                $producto = Producto::find($prod['id']);
+                return $carry + ($producto->precio * $prod['cantidad']);
+            }, 0);
+            $venta->user_id = auth()->id();
+            $venta->save();
+
+            foreach ($productos as $prod) {
+                $producto = Producto::find($prod['id']);
+                $producto->existencia -= $prod['cantidad'];
+                $producto->save();
+
+                $detalle = new VentaDetalle();
+                $detalle->venta_id = $venta->id;
+                $detalle->producto_id = $producto->id;
+                $detalle->cantidad = $prod['cantidad'];
+                $detalle->precio = $producto->precio;
+                $detalle->save();
+            }
+        });
+
+        return redirect()->route('ventas.create')->with('success', 'Venta registrada exitosamente.');
     }
 }

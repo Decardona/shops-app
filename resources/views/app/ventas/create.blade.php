@@ -1,20 +1,15 @@
 <x-layouts.app>
-  @php
-    $total = 0;
-  @endphp
-
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('ventas.index')" :current="true" class="text-xl">
       {{ __('Ventas') }}
     </flux:breadcrumbs.item>
     <flux:breadcrumbs.item :current="true" class="text-xl">
-      {{ __('Nuevo') }}
+      {{ __('Nueva') }}
     </flux:breadcrumbs.item>
   </flux:breadcrumbs>
 
   <div class="mt-6">
-    <h1 class="text-2xl font-bold">{{ __('Crear Nueva Venta') }}</h1>
-    {{-- <p class="mt-2 text-gray-600">{{ __('Ingresa los detalles del nuevo producto a continuación.') }}</p> --}}
+    <h1 class="text-2xl font-bold">{{ __('Registrar Venta') }}</h1>
   </div>
 
   <div class="mt-4 rounded-md p-4 shadow-md md:p-10">
@@ -34,11 +29,10 @@
         <livewire:ventas.buscar-producto />
       </div>
 
-      <div class="mt-4 flex justify-end gap-3 md:col-span-2">
-        <a href="{{ route('user.index') }}" class="btn-secundary">Cancelar</a>
+      <div class="mt-5 flex justify-end gap-3 md:col-span-2">
+        <a href="{{ route('ventas.create') }}" class="btn-secundary">Limpiar</a>
         <button type="submit" class="btn-primary">{{ __('Registrar Venta') }}</button>
       </div>
     </form>
   </div>
-
 </x-layouts.app>
