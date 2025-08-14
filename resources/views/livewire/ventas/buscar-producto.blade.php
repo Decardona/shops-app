@@ -14,8 +14,12 @@
           @foreach ($sugerencias as $i => $producto)
             <li wire:click="agregarProducto({{ $producto->id }})"
               class="{{ $i === $sugerenciaSeleccionada ? 'bg-yellow-200 font-bold' : '' }} cursor-pointer px-4 py-2 hover:bg-yellow-100">
-              {{ $producto->nombre }} <span class="text-xs text-gray-500">({{ $producto->sku }})</span> -
-              ${{ number_format($producto->precio, 0, ',', '.') }}
+              {{ $producto->nombre }}
+              <span class="text-xs text-gray-500">
+                ({{ $producto->sku }})
+              </span>
+              - ${{ number_format($producto->precio, 0, ',', '.') }}
+              <span class="text-xs text-gray-500">({{ $producto->existencia }} disponibles)</span>
             </li>
           @endforeach
         </ul>
@@ -24,22 +28,22 @@
   </div>
 
   @if (count($productosSeleccionados) > 0)
-    <div class="mt-6 overflow-x-auto">
-      <table class="w-full border text-sm text-gray-700">
-        <thead class="bg-gray-50">
+    <div class="mt-6 overflow-x-auto p-2">
+      <table class="w-full text-sm text-gray-700">
+        <thead class="mb-2 bg-gray-100">
           <tr>
-            <th class="text-start">Nombre</th>
-            <th class="text-start">SKU</th>
-            <th class="text-start">Precio</th>
-            <th class="text-start">Cantidad</th>
-            <th class="text-start">Subtotal</th>
-            <th class="text-start"></th>
+            <th class="p-2 text-start">Nombre</th>
+            <th class="py-2 text-start">SKU</th>
+            <th class="py-2 text-start">Precio</th>
+            <th class="py-2 text-start">Cantidad</th>
+            <th class="py-2 text-start">Subtotal</th>
+            <th class="p-2 text-start">Acciones</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($productosSeleccionados as $i => $prod)
-            <tr>
-              <td>{{ $prod['nombre'] }}</td>
+            <tr class="rounded-md py-2 even:bg-gray-50">
+              <td class="rounded-md px-2">{{ $prod['nombre'] }}</td>
               <td>{{ $prod['sku'] }}</td>
               <td>${{ number_format($prod['precio'], 0, ',', '.') }}</td>
               <td>
@@ -48,7 +52,7 @@
                   value="{{ $prod['cantidad'] }}" class="w-16 rounded border px-2 py-1">
               </td>
               <td>${{ number_format($prod['subtotal'], 0, ',', '.') }}</td>
-              <td>
+              <td class="rounded-md px-2">
                 <button type="button" wire:click="eliminarProducto({{ $i }})"
                   class="cursor-pointer font-bold text-yellow-600 hover:underline">Eliminar</button>
               </td>
@@ -56,8 +60,8 @@
           @endforeach
         </tbody>
         <tfoot>
-          <tr>
-            <td colspan="4" class="text-right font-bold">Total:</td>
+          <tr class="mt-1">
+            <td colspan="4" class="text-right font-bold">Total: &nbsp;</td>
             <td colspan="2" class="font-bold">${{ number_format($total, 0, ',', '.') }}</td>
           </tr>
         </tfoot>
