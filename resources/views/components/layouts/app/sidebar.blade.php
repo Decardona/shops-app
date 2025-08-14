@@ -37,6 +37,13 @@
               'label' => __('Vitrina'),
               'current' => request()->routeIs('vitrina'),
           ],
+          [
+              'icon' => 'shopping-bag',
+              'url' => 'vitrina',
+              'label' => __('Vender'),
+              'current' => request()->routeIs('vitrina'),
+              'visibility' => ['admin', 'user'],
+          ],
       ],
   ];
 @endphp

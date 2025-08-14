@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Tercero;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'prueba@remington.edu.co',
             'password' => bcrypt('prueba123'),
             'rol' => 'admin',
+        ]);
+
+        Tercero::factory()->create([
+            'tipo_documento' => 'CC',
+            'documento' => '22222222',
+            'nombre' => 'Consumidor',
+            'apellido' => 'Final',
+            'escliente' => true,
+            'email' => 'consumidorfinal@remington.edu.co',
+            'direccion' => 'Calle 123 #45-67'
         ]);
 
         $this->call([
