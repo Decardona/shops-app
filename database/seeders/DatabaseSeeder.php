@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'prueba',
@@ -26,7 +25,5 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             MarcaSeeder::class,
         ]);
-
-        \App\Models\Producto::factory()->count(30)->create();
     }
 }
