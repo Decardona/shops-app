@@ -29,6 +29,10 @@
 
   @if (count($productosSeleccionados) > 0)
     <div class="mt-6 overflow-x-auto p-2">
+      <div class="my-2 flex flex-row items-center gap-4">
+        <span>Total a Pagar:</span>
+        <span class="text-lg font-bold">${{ number_format($total, 0, ',', '.') }}</span>
+      </div>
       <table class="w-full text-sm text-gray-700">
         <thead class="mb-2 bg-gray-100">
           <tr>

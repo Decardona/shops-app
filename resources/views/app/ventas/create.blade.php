@@ -19,20 +19,21 @@
         <div class="flex w-2/3 flex-col">
           <livewire:ventas.buscar-tercero />
         </div>
-        <div class="mr-2 flex w-1/3 flex-row items-center justify-end gap-2">
-          <span class="font-medium text-gray-700">Fecha:</span>
-          <span class="font-bold">{{ now()->setTimezone('America/Bogota')->format('d/m/Y, h:i A') }}</span>
+        <div class="flex flex-row items-center justify-end gap-3">
+          <a href="{{ route('ventas.create') }}" class="btn-secundary">Limpiar</a>
+          <button type="submit" class="btn-primary">{{ __('Registrar Venta') }}</button>
         </div>
-      </div>
 
+      </div>
+      <div class="mt-2 flex flex-row items-center gap-2">
+        <span class="text-gray-700">Fecha:</span>
+        <span class="font-bold">{{ now()->setTimezone('America/Bogota')->format('d/m/Y, h:i A') }}</span>
+      </div>
       <div class="mt-6 border border-gray-200 p-4">
         <livewire:ventas.buscar-producto />
       </div>
 
-      <div class="mt-5 flex justify-end gap-3 md:col-span-2">
-        <a href="{{ route('ventas.create') }}" class="btn-secundary">Limpiar</a>
-        <button type="submit" class="btn-primary">{{ __('Registrar Venta') }}</button>
-      </div>
+
     </form>
   </div>
 </x-layouts.app>
