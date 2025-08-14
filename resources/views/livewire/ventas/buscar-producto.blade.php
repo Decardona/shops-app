@@ -67,5 +67,8 @@
         </tfoot>
       </table>
     </div>
+    @if (count($productosSeleccionados) > 0)
+      <input type="hidden" name="venta_detalle" value="{{ json_encode($productosSeleccionados) }}">
+    @endif
   @endif
 </div>
