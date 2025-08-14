@@ -39,9 +39,9 @@
           ],
           [
               'icon' => 'shopping-bag',
-              'url' => 'vitrina',
+              'url' => 'ventas.create',
               'label' => __('Vender'),
-              'current' => request()->routeIs('vitrina'),
+              'current' => request()->routeIs('ventas.*'),
               'visibility' => ['admin', 'user'],
           ],
       ],
@@ -54,6 +54,7 @@
 
 <head>
   @include('partials.head')
+  @livewireStyles
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
@@ -180,9 +181,8 @@
 
   {{ $slot }}
 
+  @livewireScripts
   @fluxScripts
-
-
 </body>
 
 </html>
