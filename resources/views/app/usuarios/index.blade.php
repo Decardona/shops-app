@@ -1,17 +1,17 @@
 <x-layouts.app>
 
   <flux:breadcrumbs>
-    <flux:breadcrumbs.item :href="route('productos.index')" :current="true" class="text-xl">
-      {{ __('Productos') }}
+    <flux:breadcrumbs.item :href="route('user.index')" :current="true" class="text-xl">
+      {{ __('Usuarios') }}
     </flux:breadcrumbs.item>
   </flux:breadcrumbs>
 
-  <form method="GET" action="{{ route('productos.index') }}">
+  <form method="GET" action="{{ route('user.index') }}">
     <div class="my-6 flex w-full flex-row gap-4 md:w-1/3">
       <div
         class="relative flex w-full flex-row items-center rounded-md border border-gray-300 bg-white p-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
         <flux:icon name="magnifying-glass" class="absolute left-3 top-3 h-5 w-5 text-gray-500" />
-        <input type="text" name="q" placeholder="Buscar producto..." class="w-full pl-8 focus:outline-none"
+        <input type="text" name="q" placeholder="Buscar usuario..." class="w-full pl-8 focus:outline-none"
           value="{{ request('q') }}" />
       </div>
       <button type="submit" class="btn-secundary">Buscar</button>
@@ -26,19 +26,16 @@
             Nombre
           </th>
           <th scope="col" class="px-6 py-3">
-            Marca
+            Apellido
           </th>
           <th scope="col" class="px-6 py-3">
-            Categoría
+            Email
           </th>
           <th scope="col" class="px-6 py-3">
-            Precio
+            Rol
           </th>
           <th scope="col" class="px-6 py-3">
-            SKU
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Existencia
+            Fecha de Alta
           </th>
           <th scope="col" class="px-6 py-3">
             Acciones
@@ -47,40 +44,49 @@
       </thead>
       <tbody>
 
-        @foreach ($productos as $producto)
+        @foreach ($usuarios as $usuario)
           <tr
             class="border-b border-gray-200 bg-white hover:bg-gray-300/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
             <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium uppercase text-black dark:text-white">
-              <a href="{{ route('productos.show', $producto) }}?from=listado"
-                class="hover:font-bold hover:text-yellow-500 hover:underline">
-                {{ $producto->nombre }}
-              </a>
+              {{ $usuario->name }}
             </th>
             <td class="px-6 py-4">
-              {{ $producto->marca->nombre ?? '-' }}
+              {!! $usuario->apellido ?? '<i>No especificado</i>' !!}
             </td>
             <td class="px-6 py-4">
-              {{ $producto->categoria->nombre ?? '-' }}
+              {{ $usuario->email }}
             </td>
             <td class="px-6 py-4">
-              ${{ number_format($producto->precio, 0, ',', '.') }}
+              @switch($usuario->rol)
+                @case('user')
+                  Usuario estándar
+                @break
+
+                @case('admin')
+                  Administrador
+                @break
+
+                @case('guest')
+                  Cliente visitante
+                @break
+
+                @default
+                  {{ $usuario->rol }}
+              @endswitch
             </td>
             <td class="px-6 py-4">
-              {{ $producto->sku }}
-            </td>
-            <td class="px-6 py-4">
-              {{ $producto->existencia }}
+              {{ $usuario->created_at->format('d/m/Y') }}
             </td>
             <td class="px-6 py-4 text-right">
               <div class="flex flex-row gap-4">
-                <a href="{{ route('productos.edit', $producto) }}" class="btn-primary-grid flex items-center gap-1">
+                <a href="{{ route('user.edit', $usuario) }}" class="btn-primary-grid flex items-center gap-1">
                   <flux:icon name="pencil" class="h-4 w-4" />
                   Editar
                 </a>
                 {{-- <a href="{{ route('productos.show', $producto) }}"
                   class="rounded-md bg-yellow-400 px-2 py-1 font-medium text-black shadow-md hover:bg-yellow-500 dark:text-blue-500">Ver
                   Detalles</a> --}}
-                <form action="{{ route('productos.destroy', $producto) }}" method="POST" class="delete-form">
+                <form action="{{ route('user.destroy', $usuario) }}" method="POST" class="delete-form">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn-secundary-grid flex items-center gap-1">
@@ -96,9 +102,9 @@
     </table>
   </div>
   <div class="mt-3">
-    {{ $productos->links('vendor.pagination.tailwind') }}
+    {{ $usuarios->links('vendor.pagination.tailwind') }}
   </div>
-  <x-propios.floating-add-button url="{{ route('productos.create') }}" />
+  <x-propios.floating-add-button url="{{ route('user.create') }}" />
 
   {{-- Los formularios con clase 'delete-form' se configuran automáticamente --}}
 

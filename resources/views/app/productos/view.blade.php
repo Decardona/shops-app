@@ -1,7 +1,7 @@
 <x-layouts.app>
 
   <flux:breadcrumbs>
-    <flux:breadcrumbs.item :href="route(auth()->user()->rol === 'guest' ? 'vitrina' : 'productos.index')"
+    <flux:breadcrumbs.item :href="request('from') === 'vitrina' ? route('vitrina') : route('productos.index')"
       :current="true" class="text-xl">
       {{ __('Productos') }}
     </flux:breadcrumbs.item>
@@ -13,9 +13,6 @@
   <div class="mt-6">
     <h1 class="text-2xl font-bold">{{ __('Detalles del Producto') }}</h1>
   </div>
-  {{-- <div>
-    {{ dd(auth()->user()->rol) }}
-  </div> --}}
 
   <div class="mt-4 rounded-md p-4 shadow-md md:p-10">
     <div class="grid grid-cols-1 md:grid-cols-2 md:gap-6">
@@ -52,11 +49,15 @@
               <span>${{ number_format($producto->costo_promedio, 2, '.', ',') }}</span>
             </div>
           @endif
-
         </div>
       </div>
     </div>
-
+    <div class="mt-2 flex justify-end">
+      <a href="{{ request('from') === 'vitrina' ? route('vitrina') : route('productos.index') }}"
+        class="btn-secundary">
+        {{ __('Regresar') }}
+      </a>
+    </div>
   </div>
 
 

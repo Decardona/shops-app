@@ -5,6 +5,7 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\TerceroController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -19,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('vitrina', [ProductoController::class, 'list'])->name('vitrina');
     Route::resource('productos', ProductoController::class);
     Route::resource('terceros', TerceroController::class);
+    Route::resource('user', UserController::class);
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

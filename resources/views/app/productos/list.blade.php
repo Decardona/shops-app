@@ -55,7 +55,8 @@
 
           <!-- Footer de la tarjeta -->
           <div class="flex-shrink-0 border-t bg-gray-50 px-4 py-3">
-            <button class="btn-primary w-full" onclick="location.href='{{ route('productos.show', $producto) }}'">
+            <button class="btn-primary w-full"
+              onclick="location.href='{{ route('productos.show', $producto) }}?from=vitrina'">
               Ver detalles
             </button>
           </div>

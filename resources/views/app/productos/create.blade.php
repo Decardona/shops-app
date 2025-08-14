@@ -68,7 +68,8 @@
         </flux:textarea>
       </div>
 
-      <div class="mt-4 flex justify-end md:col-span-2">
+      <div class="mt-4 flex justify-end gap-3 md:col-span-2">
+        <a href="{{ route('productos.index') }}" class="btn-secundary">Cancelar</a>
         <button type="submit" class="btn-primary">{{ __('Crear Producto') }}</button>
       </div>
     </form>

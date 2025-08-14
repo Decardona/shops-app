@@ -22,6 +22,13 @@
               'current' => request()->routeIs('terceros.*'),
               'visibility' => ['user', 'admin'],
           ],
+          [
+              'icon' => 'users',
+              'url' => 'user.index',
+              'label' => __('Usuarios'),
+              'current' => request()->routeIs('user.*'),
+              'visibility' => ['admin'],
+          ],
       ],
       'Shops' => [
           [
@@ -62,8 +69,8 @@
         @if ($visibleLinks->count())
           <flux:navlist.group :heading="__($group)" class="grid">
             @foreach ($visibleLinks as $item)
-              <flux:navlist.item icon="{{ $item['icon'] }}" :href="route($item['url'])" :current="$item['current']"
-                wire:navigate>
+              <flux:navlist.item class="{{ $item['current'] ? 'border-yellow-400' : 'hover:border-yellow-400' }}"
+                icon="{{ $item['icon'] }}" :href="route($item['url'])" :current="$item['current']" wire:navigate>
                 {{ $item['label'] }}
               </flux:navlist.item>
             @endforeach
