@@ -55,8 +55,7 @@ class VentaController extends Controller
         if (count($errores) > 0) {
             return redirect()->back()->with(['error' => implode(', ', $errores)]);
         }
-
-        DB::transaction(function() use ($data, $productos) {
+        $idVenta = DB::transaction(function() use ($data, $productos) {
             $venta = new Venta();
             $venta->tercero_id = $data['tercero_id'];
             $venta->total = array_reduce($productos, function($carry, $prod) {
@@ -78,8 +77,15 @@ class VentaController extends Controller
                 $detalle->precio = $producto->precio;
                 $detalle->save();
             }
+            return $venta->id;
         });
 
-        return redirect()->route('ventas.create')->with('success', 'Venta registrada exitosamente.');
+        return redirect()->route('ventas.imprimir', $idVenta)->with('success', 'Venta registrada exitosamente.');
+    }
+
+    public function imprimir($id)
+    {
+        $venta = Venta::with('detalles.producto')->findOrFail($id);
+        return view('app.imprimir', compact('venta'));
     }
 }
