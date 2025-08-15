@@ -1,6 +1,8 @@
 <x-layouts.app>
-  <a href="{{ route('ventas.create') }}" class="btn-secundary print:hidden">Regresar </a>
-  <div class="flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
+  <div class="mb-4 print:hidden">
+    <a href="{{ route('ventas.create') }}" class="btn-secundary">Regresar </a>
+  </div>
+  <div class="flex w-1/3 flex-col items-center justify-center border border-gray-100 p-2 print:w-1/2">
     <span class="text-2xl font-bold">SHOPS COMPANY INC.</span>
     <span class="text-lg">Factura de venta No: <strong>{{ $venta->id }}</strong></span>
     <p class="text-xs">Fecha:
@@ -27,18 +29,17 @@
       @foreach ($venta->detalles as $detalle)
         <div class="flex flex-row justify-between gap-2 border-b border-gray-200 p-1">
           <span class="text-xs">{{ $detalle->producto->nombre }}</span>
-          <span class="text-xs">{{ $detalle->cantidad }} x {{ $detalle->precio }} =
-            {{ $detalle->cantidad * $detalle->precio }}</span>
+          <span class="text-xs">{{ $detalle->cantidad }} x ${{ number_format($detalle->precio, 0, ',', '.') }} =
+            ${{ number_format($detalle->cantidad * $detalle->precio, 0, ',', '.') }}</span>
         </div>
       @endforeach
     </div>
     <div class="mt-2 flex w-auto flex-row justify-end gap-2">
       <span class="self-start text-lg">Total:</span>
-      <span class="text-lg font-semibold">${{ number_format($venta->total, 2, ',', '.') }}</span>
+      <span class="text-lg font-semibold">${{ number_format($venta->total, 0, ',', '.') }}</span>
     </div>
-    <script>
-      window.onload = function() {
-        window.print();
-      };
-    </script>
+    <div class="mt-2">
+      <span class="text-xs">Gracias por tu compra, esperamos verte pronto.</span>
+    </div>
+    <button onclick="window.print()" class="btn-primary mt-4 print:hidden">Imprimir</button>
 </x-layouts.app>
