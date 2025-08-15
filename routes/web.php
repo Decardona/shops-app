@@ -22,9 +22,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('productos', ProductoController::class);
     Route::resource('terceros', TerceroController::class);
     Route::resource('user', UserController::class);
-
-    Route::resource('ventas', VentaController::class);
+    Route::get('ventas/create', [VentaController::class, 'create'])->name('ventas.create');
     Route::get('ventas/{id}/imprimir', [VentaController::class, 'imprimir'])->name('ventas.imprimir');
+    Route::post('ventas/store', [VentaController::class, 'store'])->name('ventas.store');
+    Route::get('ventas/search', [VentaController::class, 'search'])->name('search_factura');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

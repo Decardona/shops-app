@@ -86,6 +86,10 @@ class VentaController extends Controller
     public function imprimir($id)
     {
         $venta = Venta::with('detalles.producto')->findOrFail($id);
-        return view('app.imprimir', compact('venta'));
+        return view('app.ventas.imprimir', compact('venta'));
+    }
+
+    public function search() {
+        return view('app.ventas.search');
     }
 }
