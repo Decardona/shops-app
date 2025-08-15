@@ -2,7 +2,7 @@
   <div class="mb-4 print:hidden">
     <a href="{{ route('ventas.create') }}" class="btn-secundary">Regresar </a>
   </div>
-  <div class="flex w-1/3 flex-col items-center justify-center border border-gray-100 p-2 print:w-1/2">
+  <div class="flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
     <span class="text-2xl font-bold">SHOPS COMPANY INC.</span>
     <span class="text-lg">Factura de venta No: <strong>{{ $venta->id }}</strong></span>
     <p class="text-xs">Fecha:
