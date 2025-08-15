@@ -16,7 +16,7 @@
     <form action="{{ route('ventas.store') }}" method="POST">
       @csrf
       <div class="flex flex-col gap-6 md:flex-row md:justify-between">
-        <div class="flex w-[50%] flex-col 2xl:w-3/5">
+        <div class="flex flex-col md:w-[50%] 2xl:w-3/5">
           <livewire:ventas.buscar-tercero />
         </div>
         <div class="mt-2 flex flex-col items-start gap-2 2xl:w-1/5">
