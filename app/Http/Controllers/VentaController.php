@@ -92,4 +92,20 @@ class VentaController extends Controller
     public function search() {
         return view('app.ventas.search');
     }
+
+    public function startSearch() {
+        $data = request()->validate([
+            'query' => 'required|string|max:255',
+        ]);
+
+        // Implement search logic here
+        $results = Venta::with('detalles.producto')
+            ->where('id', $data['query'])
+            ->orWhereHas('detalles.producto', function($query) use ($data) {
+                $query->where('nombre', 'like', "%{$data['query']}%");
+            })
+            ->get();
+
+        return view('app.ventas.search_results', compact('results'));
+    }
 }

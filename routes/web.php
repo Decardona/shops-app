@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ventas/{id}/imprimir', [VentaController::class, 'imprimir'])->name('ventas.imprimir');
     Route::post('ventas/store', [VentaController::class, 'store'])->name('ventas.store');
     Route::get('ventas/search', [VentaController::class, 'search'])->name('search_factura');
+    Route::get('ventas/start-search', [VentaController::class, 'startSearch'])->name('ventas.start_search');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
