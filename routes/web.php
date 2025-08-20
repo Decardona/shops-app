@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('ventas/store', [VentaController::class, 'store'])->name('ventas.store');
     Route::get('ventas/search', [VentaController::class, 'search'])->name('search_factura');
     Route::post('ventas/start-search', [VentaController::class, 'startSearch'])->name('ventas.start_search');
+    Route::delete('ventas/{venta}', [VentaController::class, 'destroy'])->name('ventas.destroy');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

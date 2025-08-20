@@ -85,7 +85,9 @@ class VentaController extends Controller
 
     public function imprimir(Request $request, $id)
     {
-        $venta = Venta::with(['detalles.producto', 'tercero'])->findOrFail($id);
+        $venta = Venta::with(['detalles.producto', 'tercero'])
+        ->withTrashed()
+        ->findOrFail($id);
         $from = $request->query('from');
 
         return view('app.ventas.imprimir', compact('venta', 'from'));
@@ -106,6 +108,7 @@ class VentaController extends Controller
 
             // Implement search logic here
             $results = Venta::with('detalles.producto')
+                ->withTrashed()
                 ->where('id', $data['codigo_factura'])
                 ->get();
 
@@ -116,6 +119,7 @@ class VentaController extends Controller
                 'fecha_compra' => 'required|date',
             ]);
             $results = Venta::with('detalles.producto')
+                ->withTrashed()
                 ->where('tercero_id', $data['tercero_id'])
                 ->whereDate('fecha', $data['fecha_compra'])
                 ->get();
@@ -126,5 +130,37 @@ class VentaController extends Controller
         }
 
         
+    }
+
+    public function destroy(Venta $venta)
+    {
+        try {
+            DB::transaction(function() use ($venta) {
+                // Cargar los detalles si no están cargados
+                if (!$venta->relationLoaded('detalles')) {
+                    $venta->load('detalles');
+                }
+
+                // Devolver existencias a los productos
+                foreach ($venta->detalles as $detalle) {
+                    $producto = Producto::find($detalle->producto_id);
+                    if ($producto) {
+                        $producto->existencia += $detalle->cantidad;
+                        $producto->save();
+                    }
+                }
+
+                // Anular la venta (soft delete)
+                $venta->delete();
+            });
+
+            return redirect()
+                ->route('search_factura')
+                ->with('success', 'Venta anulada exitosamente y existencias restauradas.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('search_factura')
+                ->with('error', 'Error al anular la venta: ' . $e->getMessage());
+        }
     }
 }

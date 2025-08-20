@@ -3,7 +3,12 @@
     <a href="{{ $from === 'search' ? route('search_factura') : route('ventas.create') }}" class="btn-secundary">Regresar
     </a>
   </div>
-  <div class="flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
+  <div class="relative flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
+    @if ($venta->deleted_at)
+      <span class="absolute inset-0 -z-10 flex items-center justify-center text-6xl font-semibold text-gray-200">
+        Anulada
+      </span>
+    @endif
     <span class="text-2xl font-bold">SHOPS COMPANY INC.</span>
     <span class="text-lg">Factura de venta No: <strong>{{ $venta->id }}</strong></span>
     <p class="text-xs">Fecha:
@@ -43,4 +48,5 @@
       <span class="text-xs">Gracias por tu compra, esperamos verte pronto.</span>
     </div>
     <button onclick="window.print()" class="btn-primary mt-4 print:hidden">Imprimir</button>
+  </div>
 </x-layouts.app>

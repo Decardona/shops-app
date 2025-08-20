@@ -47,7 +47,7 @@
       </div>
     </form>
   </div>
-  <div class="mt-3">
+  <div class="mt-3 rounded-md">
     @if (isset($results) && $results->count() > 0)
       <table class="min-w-full divide-y divide-gray-200 rounded-md shadow-md">
         <thead class="bg-gray-100">
@@ -73,19 +73,23 @@
               <td class="px-4 py-2">{{ $venta->tercero->nombre }} {{ $venta->tercero->apellido }}</td>
               <td class="px-4 py-2">${{ number_format($venta->total, 2) }}</td>
               <td class="px-4 py-2">
-                <div class="flex flex-row gap-4">
+                <div class="flex flex-row items-center gap-4">
                   <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
                     class="btn-primary-grid">Ver</a>
-                  <form action="{{ route('productos.destroy', $venta) }}" method="POST" class="delete-form"
-                    data-item-name="{{ 'la venta No: ' . $venta->id . ' del cliente ' . $venta->tercero->nombre . ' ' . $venta->tercero->apellido }}"
-                    data-action="Anular">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-secundary-grid flex items-center gap-1">
-                      <flux:icon name="trash" class="h-4 w-4" />
-                      Anular
-                    </button>
-                  </form>
+                  @if ($venta->deleted_at)
+                    <span class="font-semibold text-gray-600">Anulada</span>
+                  @else
+                    <form action="{{ route('ventas.destroy', $venta) }}" method="POST" class="delete-form"
+                      data-item-name="{{ 'la venta No: ' . $venta->id . ' del cliente ' . $venta->tercero->nombre . ' ' . $venta->tercero->apellido }}"
+                      data-action="Anular">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn-secundary-grid flex items-center gap-1">
+                        <flux:icon name="trash" class="h-4 w-4" />
+                        Anular
+                      </button>
+                    </form>
+                  @endif
                 </div>
               </td>
             </tr>
