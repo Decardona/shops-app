@@ -14,10 +14,11 @@
 
   <div class="mt-4 rounded-md p-4 shadow-md md:p-10">
     <!-- Formulario 1: Buscar por código de factura -->
-    <form action="{{ route('ventas.start_search') }}" method="GET" class="mb-8">
+    <form action="{{ route('ventas.start_search', ['tipo_busqueda' => 'codigo_factura']) }}" method="POST" class="mb-8">
+      @csrf
       <div class="flex flex-row gap-6">
         <flux:input type="text" label="Código de factura" name="codigo_factura" placeholder="Código de factura"
-          class="md:min-w-[350px]" />
+          class="md:min-w-[350px]" required />
         <div class="flex flex-col justify-end">
           <button type="submit" class="btn-primary">Buscar</button>
         </div>
@@ -25,7 +26,8 @@
     </form>
 
     <!-- Formulario 2: Buscar por tercero y fecha -->
-    <form action="{{ route('ventas.start_search') }}" method="GET">
+    <form action="{{ route('ventas.start_search', ['tipo_busqueda' => 'tercero_fecha']) }}" method="POST">
+      @csrf
       <div class="flex flex-col gap-6 md:flex-row md:justify-between">
         <div class="flex flex-col md:min-w-[450px]">
           <livewire:ventas.buscar-tercero />
@@ -34,7 +36,8 @@
           <span class="text-sm text-gray-700">Fecha:</span>
           <div class="rounded-md border border-gray-200 shadow-sm">
             <input type="date" name="fecha_compra"
-              class="rounded-md px-3 py-2 focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500" />
+              class="rounded-md px-3 py-2 focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500"
+              required />
           </div>
         </div>
         <div class="flex flex-row items-center justify-center gap-3 2xl:w-1/5">
@@ -43,5 +46,36 @@
         </div>
       </div>
     </form>
+  </div>
+  <div class="mt-3">
+    @if (isset($results) && $results->count() > 0)
+      <table class="min-w-full divide-y divide-gray-200 rounded-md shadow-md">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ID</th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Valor</th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          @foreach ($results as $venta)
+            <tr>
+              <td class="px-4 py-2">{{ $venta->id }}</td>
+              <td class="px-4 py-2">{{ $venta->fecha }}</td>
+              <td class="px-4 py-2">${{ number_format($venta->valor, 2) }}</td>
+              <td class="px-4 py-2">
+                <a href="{{ route('ventas.imprimir', $venta->id, ['from' => 'search']) }}"
+                  class="text-yellow-500 hover:text-yellow-700">Ver</a>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    @else
+      @if (isset($results) && $results->count() === 0)
+        <p>No se encontraron resultados.</p>
+      @endif
+    @endif
   </div>
 </x-layouts.app>

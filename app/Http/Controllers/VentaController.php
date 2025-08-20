@@ -83,29 +83,50 @@ class VentaController extends Controller
         return redirect()->route('ventas.imprimir', $idVenta)->with('success', 'Venta registrada exitosamente.');
     }
 
-    public function imprimir($id)
+    public function imprimir(Request $request, $id)
     {
         $venta = Venta::with('detalles.producto')->findOrFail($id);
-        return view('app.ventas.imprimir', compact('venta'));
+        $from = $request->query('from');
+        dd($from);
+        
+        return view('app.ventas.imprimir', compact('venta', 'from'));
     }
 
     public function search() {
         return view('app.ventas.search');
     }
 
-    public function startSearch() {
-        $data = request()->validate([
-            'query' => 'required|string|max:255',
-        ]);
+    public function startSearch(Request $request) {
 
-        // Implement search logic here
-        $results = Venta::with('detalles.producto')
-            ->where('id', $data['query'])
-            ->orWhereHas('detalles.producto', function($query) use ($data) {
-                $query->where('nombre', 'like', "%{$data['query']}%");
-            })
-            ->get();
+        $tipo_busqueda = $request->query('tipo_busqueda');
 
-        return view('app.ventas.search_results', compact('results'));
+        if ($tipo_busqueda === 'codigo_factura') {
+            $data = $request->validate([
+                'codigo_factura' => 'required|string|max:255',
+            ]);
+
+            // Implement search logic here
+            $results = Venta::with('detalles.producto')
+                ->where('id', $data['codigo_factura'])
+                ->get();
+
+            return view('app.ventas.search', compact('results'));
+        } elseif ($tipo_busqueda === 'tercero_fecha') {
+            $data = $request->validate([
+                'tercero_id' => 'required|exists:terceros,id',
+                'fecha_compra' => 'required|date',
+            ]);
+
+            $results = Venta::with('detalles.producto')
+                ->where('tercero_id', $data['tercero_id'])
+                ->whereDate('created_at', $data['fecha_compra'])
+                ->get();
+
+            return view('app.ventas.search', compact('results'));
+        } else {
+            return redirect()->back()->with(['error' => 'Tipo de búsqueda inválido.']);
+        }
+
+        
     }
 }

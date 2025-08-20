@@ -1,6 +1,7 @@
 <x-layouts.app>
   <div class="mb-4 print:hidden">
-    <a href="{{ route('ventas.create') }}" class="btn-secundary">Regresar </a>
+    <a href="{{ $from === 'search' ? route('ventas.search') : route('ventas.create') }}" class="btn-secundary">Regresar
+    </a>
   </div>
   <div class="flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
     <span class="text-2xl font-bold">SHOPS COMPANY INC.</span>
