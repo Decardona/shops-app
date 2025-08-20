@@ -65,7 +65,7 @@
               <td class="px-4 py-2">
                 <flux:tooltip content="Ver Factura">
                   <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
-                    class="btn-primary-grid">{{ $venta->id }}
+                    class="font-semibold hover:text-yellow-500">{{ $venta->id }}
                   </a>
                 </flux:tooltip>
               </td>

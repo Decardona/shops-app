@@ -101,7 +101,7 @@ class VentaController extends Controller
 
         if ($tipo_busqueda === 'codigo_factura') {
             $data = $request->validate([
-                'codigo_factura' => 'required|string|max:255',
+                'codigo_factura' => 'required|string|max:15',
             ]);
 
             // Implement search logic here
@@ -115,10 +115,9 @@ class VentaController extends Controller
                 'tercero_id' => 'required|exists:terceros,id',
                 'fecha_compra' => 'required|date',
             ]);
-
             $results = Venta::with('detalles.producto')
                 ->where('tercero_id', $data['tercero_id'])
-                ->whereDate('created_at', $data['fecha_compra'])
+                ->whereDate('fecha', $data['fecha_compra'])
                 ->get();
 
             return view('app.ventas.search', compact('results'));
