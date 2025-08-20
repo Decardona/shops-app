@@ -85,10 +85,9 @@ class VentaController extends Controller
 
     public function imprimir(Request $request, $id)
     {
-        $venta = Venta::with('detalles.producto')->findOrFail($id);
+        $venta = Venta::with(['detalles.producto', 'tercero'])->findOrFail($id);
         $from = $request->query('from');
-        dd($from);
-        
+
         return view('app.ventas.imprimir', compact('venta', 'from'));
     }
 

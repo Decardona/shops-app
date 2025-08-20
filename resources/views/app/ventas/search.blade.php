@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="flex flex-row items-center justify-center gap-3 2xl:w-1/5">
-          <a href="{{ route('ventas.create') }}" class="btn-secundary">Limpiar</a>
+          <a href="{{ route('search_factura') }}" class="btn-secundary">Limpiar</a>
           <button type="submit" class="btn-primary">Buscar</button>
         </div>
       </div>
@@ -54,6 +54,7 @@
           <tr>
             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ID</th>
             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Fecha</th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Cliente</th>
             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Valor</th>
             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Acciones</th>
           </tr>
@@ -62,10 +63,11 @@
           @foreach ($results as $venta)
             <tr>
               <td class="px-4 py-2">{{ $venta->id }}</td>
-              <td class="px-4 py-2">{{ $venta->fecha }}</td>
-              <td class="px-4 py-2">${{ number_format($venta->valor, 2) }}</td>
+              <td class="px-4 py-2">{{ date('d/m/Y, h:i A', strtotime($venta->fecha)) }}</td>
+              <td class="px-4 py-2">{{ $venta->tercero->nombre }} {{ $venta->tercero->apellido }}</td>
+              <td class="px-4 py-2">${{ number_format($venta->total, 2) }}</td>
               <td class="px-4 py-2">
-                <a href="{{ route('ventas.imprimir', $venta->id, ['from' => 'search']) }}"
+                <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
                   class="text-yellow-500 hover:text-yellow-700">Ver</a>
               </td>
             </tr>

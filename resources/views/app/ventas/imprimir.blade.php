@@ -1,6 +1,6 @@
 <x-layouts.app>
   <div class="mb-4 print:hidden">
-    <a href="{{ $from === 'search' ? route('ventas.search') : route('ventas.create') }}" class="btn-secundary">Regresar
+    <a href="{{ $from === 'search' ? route('search_factura') : route('ventas.create') }}" class="btn-secundary">Regresar
     </a>
   </div>
   <div class="flex w-1/2 flex-col items-center justify-center border border-gray-100 p-2">
