@@ -12,7 +12,7 @@
       <div class="overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-700">
         <div class="flex flex-col">
           <span class="text-sm text-gray-500">Total Ventas de Hoy</span>
-          <span class="text-2xl font-bold">${{ number_format($data['totalMontoVentasHoy'], 0, ',', '.') }}</span>
+          <span class="text-2xl font-bold">$ {{ number_format($data['totalMontoVentasHoy'], 0, ',', '.') }}</span>
           <span class="mt-2 text-sm text-yellow-500">
             <flux:icon name="arrow-path" class="inline h-4 w-4" />
             Actualizado en tiempo real
@@ -63,6 +63,14 @@
       const datosVentas = @json($data['ventasPorHora']->pluck('total_ventas', 'hora_formato'));
       const datosMontos = @json($data['ventasPorHora']->pluck('monto_total', 'hora_formato'));
 
+      // Función para formatear moneda
+      const formatMoney = (value) => {
+        return '$ ' + new Intl.NumberFormat('es-CO', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(value);
+      };
+
       // Configuración del gráfico
       let options = {
         series: [{
@@ -111,13 +119,31 @@
         }];
 
         const nuevoTitulo = {
-          text: tipo === 'ventas' ? 'Cantidad de Ventas' : 'Monto Total ($)'
+          text: tipo === 'ventas' ? 'Cantidad de Ventas' : 'Monto Total'
         };
 
         chart.updateOptions({
           series: nuevasSeries,
           yaxis: {
-            title: nuevoTitulo
+            title: nuevoTitulo,
+            labels: {
+              formatter: function(value) {
+                if (tipo === 'montos') {
+                  return formatMoney(value);
+                }
+                return value;
+              }
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: function(value) {
+                if (tipo === 'montos') {
+                  return formatMoney(value);
+                }
+                return value + ' ventas';
+              }
+            }
           }
         });
       }
