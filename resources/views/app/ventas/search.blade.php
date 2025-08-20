@@ -77,12 +77,13 @@
                   <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
                     class="btn-primary-grid">Ver</a>
                   <form action="{{ route('productos.destroy', $venta) }}" method="POST" class="delete-form"
-                    data-item-name="{{ $venta->id }}">
+                    data-item-name="{{ 'la venta No: ' . $venta->id . ' del cliente ' . $venta->tercero->nombre . ' ' . $venta->tercero->apellido }}"
+                    data-action="Anular">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn-secundary-grid flex items-center gap-1">
                       <flux:icon name="trash" class="h-4 w-4" />
-                      Eliminar
+                      Anular
                     </button>
                   </form>
                 </div>

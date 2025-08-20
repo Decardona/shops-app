@@ -36,17 +36,22 @@
           form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Buscar el nombre del elemento
-            const nameElement = this.closest('tr')?.querySelector('th a, td a, [data-item-name]') ||
-              this.querySelector('[data-item-name]');
-            const itemName = nameElement ?
-              (nameElement.textContent?.trim() || nameElement.dataset.itemName) :
-              'este elemento';
+            // Primero buscar el data-item-name
+            let itemName = this.getAttribute('data-item-name');
+
+            // Si no se encuentra data-item-name, buscar en los enlaces
+            if (!itemName) {
+              const nameElement = this.closest('tr')?.querySelector('th a, td a');
+              itemName = nameElement ? nameElement.textContent?.trim() : 'este elemento';
+            }
+
+            // Obtener la acción personalizada o usar 'Eliminar' por defecto
+            const action = this.getAttribute('data-action') || 'Eliminar';
 
             if (typeof window.Swal !== 'undefined') {
               window.Swal.fire({
-                title: 'Confirmar eliminación',
-                html: `¿Deseas eliminar <strong>${itemName}</strong>?`,
+                title: `¿${action}?`,
+                html: `¿Deseas ${action} <strong>${itemName}</strong>?`,
                 text: "Esta acción no se puede deshacer.",
                 icon: "warning",
                 showCancelButton: true,
