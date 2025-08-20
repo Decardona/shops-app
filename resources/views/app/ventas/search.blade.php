@@ -62,13 +62,30 @@
         <tbody class="divide-y divide-gray-200 bg-white">
           @foreach ($results as $venta)
             <tr>
-              <td class="px-4 py-2">{{ $venta->id }}</td>
+              <td class="px-4 py-2">
+                <flux:tooltip content="Ver Factura">
+                  <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
+                    class="btn-primary-grid">{{ $venta->id }}
+                  </a>
+                </flux:tooltip>
+              </td>
               <td class="px-4 py-2">{{ date('d/m/Y, h:i A', strtotime($venta->fecha)) }}</td>
               <td class="px-4 py-2">{{ $venta->tercero->nombre }} {{ $venta->tercero->apellido }}</td>
               <td class="px-4 py-2">${{ number_format($venta->total, 2) }}</td>
               <td class="px-4 py-2">
-                <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
-                  class="text-yellow-500 hover:text-yellow-700">Ver</a>
+                <div class="flex flex-row gap-4">
+                  <a href="{{ route('ventas.imprimir', ['id' => $venta->id, 'from' => 'search']) }}"
+                    class="btn-primary-grid">Ver</a>
+                  <form action="{{ route('productos.destroy', $venta) }}" method="POST" class="delete-form"
+                    data-item-name="{{ $venta->id }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-secundary-grid flex items-center gap-1">
+                      <flux:icon name="trash" class="h-4 w-4" />
+                      Eliminar
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
           @endforeach
