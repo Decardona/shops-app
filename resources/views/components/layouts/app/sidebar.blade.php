@@ -36,6 +36,13 @@
               'current' => request()->routeIs('search_factura'),
               'visibility' => ['admin'],
           ],
+          [
+              'icon' => 'shopping-bag',
+              'url' => 'compras.index',
+              'label' => __('Compra de Mercancia'),
+              'current' => request()->routeIs('compras'),
+              'visibility' => ['admin'],
+          ],
       ],
       'Shops' => [
           [

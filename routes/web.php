@@ -8,6 +8,7 @@ use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\TerceroController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\ComprasController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ventas/search', [VentaController::class, 'search'])->name('search_factura');
     Route::post('ventas/start-search', [VentaController::class, 'startSearch'])->name('ventas.start_search');
     Route::delete('ventas/{venta}', [VentaController::class, 'destroy'])->name('ventas.destroy');
+    Route::resource('compras', ComprasController::class);
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
