@@ -1,5 +1,5 @@
 <x-layouts.app>
-  <div class="mx-auto p-6">
+  <div class="mx-auto p-2">
     <h1 class="mb-8 text-3xl font-bold text-gray-800">Productos</h1>
     <form method="GET" action="{{ route('vitrina') }}">
       <div class="mb-6 flex w-full flex-row gap-4 md:w-1/3">
