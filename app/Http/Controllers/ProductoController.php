@@ -67,7 +67,7 @@ class ProductoController extends Controller
             'categoria_id' => 'required|exists:categorias,id',
             'marca_id' => 'required|exists:marcas,id',
             'activo' => 'required|boolean',
-            'imagen_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'imagen' => 'nullable|string|max:255'
         ]);
 
