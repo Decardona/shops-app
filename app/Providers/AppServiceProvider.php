@@ -3,30 +3,29 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\Middleware\TrustProxies;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * Register any application services.
+     */
     public function register(): void
     {
         //
     }
 
+    /**
+     * Bootstrap any application services.
+     */
     public function boot(): void
     {
+
+        if ($this->app->environment('production')) {
+        URL::forceScheme('https');
+        }
         // Configurar Carbon en español
         Carbon::setLocale(config('app.locale'));
-
-        // Forzar Laravel a reconocer HTTPS detrás de Nginx
-        $this->app->singleton(TrustProxies::class, function ($app) {
-            $trustProxies = new TrustProxies($app['request']);
-            $trustProxies->setTrustedProxies(
-                ['*'], // O aquí puedes poner la IP de tu Nginx si quieres más seguro
-                Request::HEADER_X_FORWARDED_ALL
-            );
-            return $trustProxies;
-        });
     }
 }
