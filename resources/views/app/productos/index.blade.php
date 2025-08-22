@@ -22,25 +22,25 @@
     <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
       <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Nombre
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Marca
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Categoría
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Precio
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             SKU
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Existencia
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="min-w-1/6 p-2">
             Acciones
           </th>
         </tr>
@@ -50,28 +50,28 @@
         @foreach ($productos as $producto)
           <tr
             class="border-b border-gray-200 bg-white hover:bg-gray-300/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-            <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium uppercase text-black dark:text-white">
+            <th scope="row" class="min-w-1/6 whitespace-nowrap p-2 font-medium uppercase text-black dark:text-white">
               <a href="{{ route('productos.show', $producto) }}?from=listado"
                 class="hover:font-bold hover:text-yellow-500 hover:underline">
                 {{ $producto->nombre }}
               </a>
             </th>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">
               {{ $producto->marca->nombre ?? '-' }}
             </td>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">
               {{ $producto->categoria->nombre ?? '-' }}
             </td>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">
               ${{ number_format($producto->precio, 0, ',', '.') }}
             </td>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">
               {{ $producto->sku }}
             </td>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">
               {{ $producto->existencia }}
             </td>
-            <td class="px-6 py-4 text-right">
+            <td class="min-w-1/6 p-2 text-right">
               <div class="flex flex-row gap-4">
                 <a href="{{ route('productos.edit', $producto) }}" class="btn-primary-grid flex items-center gap-1">
                   <flux:icon name="pencil" class="h-4 w-4" />

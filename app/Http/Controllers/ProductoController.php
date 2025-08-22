@@ -21,7 +21,7 @@ class ProductoController extends Controller
             ->orWhere('nombre', 'like', '%' . request('q') . '%')
             ->orWhere('descripcion', 'like', '%' . request('q') . '%')
             ->orWhere('sku', 'like', '%' . request('q') . '%')
-            ->paginate(10),
+            ->paginate(14),
         ]);
     }
 
