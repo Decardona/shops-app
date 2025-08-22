@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Tercero;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\DatosPruebaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
             CategoriaSeeder::class,
             MarcaSeeder::class,
             ProductoSeeder::class,
+            DatosPruebaSeeder::class,
         ]);
     }
 }

@@ -44,19 +44,21 @@ class DashboardController extends Controller
             ->get();
 
         // Ventas por hora (para el gráfico)
+
         $ventasPorHora = Venta::select(
-            DB::raw('HOUR(created_at) as hora'),
+            DB::raw("HOUR(created_at) as hora"),
             DB::raw('COUNT(*) as total_ventas'),
             DB::raw('SUM(total) as monto_total')
         )
-            ->whereDate('created_at', Carbon::today())
-            ->groupBy('hora')
-            ->orderBy('hora')
-            ->get()
-            ->map(function ($venta) {
-                $venta->hora_formato = sprintf('%02d:00', $venta->hora);
-                return $venta;
-            });
+        ->whereDate('created_at', Carbon::today())
+        ->groupBy('hora')
+        ->orderBy('hora')
+        ->get()
+        ->map(function ($venta) {
+            $venta->hora_formato = sprintf('%02d:00', $venta->hora);
+            return $venta;
+        });
+
 
         // Asegurar que todas las variables tengan valores por defecto
         $data = [
@@ -66,6 +68,7 @@ class DashboardController extends Controller
             'productosMasVendidos' => $productosMasVendidos ?? collect(),
             'ventasPorHora' => $ventasPorHora ?? collect()
         ];
+
 
         return view('dashboard', compact('data'));
     }
