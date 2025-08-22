@@ -22,29 +22,32 @@
     <table class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
       <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">Tipo Documento</th>
-          <th scope="col" class="px-6 py-3">Documento</th>
-          <th scope="col" class="px-6 py-3">Nombre</th>
-          <th scope="col" class="px-6 py-3">Apellido</th>
-          <th scope="col" class="px-6 py-3">tipo tercero</th>
-          <th scope="col" class="px-6 py-3">Telefono </th>
-      <th scope="col" class="px-6 py-3">Direccion</th>
-          <th scope="col" class="px-6 py-3">Correo</th>
-              <th scope="col" class="px-6 py-3">Acciones</th>
+          <th scope="col" class="min-w-1/6 p-2">Documento</th>
+          <th scope="col" class="min-w-1/6 p-2">Nombre</th>
+          <th scope="col" class="min-w-1/6 p-2">Apellido</th>
+          <th scope="col" class="min-w-1/6 p-2">tipo tercero</th>
+          <th scope="col" class="min-w-1/6 p-2">Telefono </th>
+          <th scope="col" class="min-w-1/6 p-2">Direccion</th>
+          <th scope="col" class="min-w-1/6 p-2">Correo</th>
+          <th scope="col" class="min-w-1/6 p-2">Acciones</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($terceros as $tercero)
-          <tr class="border-b border-gray-200 bg-white hover:bg-gray-300/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-            <td class="px-6 py-4">{{ $tercero->tipo_documento }}</td>
-            <td class="px-6 py-4 font-medium uppercase text-black dark:text-white">
-              <a href="#" class="hover:font-bold hover:text-yellow-500 hover:underline">
-                {{ $tercero->documento }}
+          <tr
+            class="border-b border-gray-200 bg-white hover:bg-gray-300/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+            <td class="min-w-1/6 p-2 font-medium uppercase text-black dark:text-white">
+              <a href="#" class="hover:text-yellow-500">
+                <div class="flex flex-row gap-2">
+                  <span class="text-gray-500">
+                    {{ $tercero->tipo_documento }}:
+                  </span>{{ $tercero->documento }}
+                </div>
               </a>
             </td>
-            <td class="px-6 py-4">{{ $tercero->nombre }}</td>
-            <td class="px-6 py-4">{{ $tercero->apellido }}</td>
-            <td class="px-6 py-4">
+            <td class="min-w-1/6 p-2">{{ $tercero->nombre }}</td>
+            <td class="min-w-1/6 p-2">{{ $tercero->apellido }}</td>
+            <td class="min-w-1/6 p-2">
               @if ($tercero->escliente && $tercero->esproveedor)
                 Cliente y Proveedor
               @elseif ($tercero->escliente)
@@ -54,11 +57,11 @@
               @else
                 Ninguno
               @endif
-            <td class="px-6 py-4">{{ $tercero->telefono }}</td>
-             <td class="px-6 py-4">{{ $tercero->direccion }}</td>
-            <td class="px-6 py-4">{{ $tercero->email }}</td>
-       
-             <td class="px-6 py-4 text-right">
+            <td class="min-w-1/6 p-2">{{ $tercero->telefono }}</td>
+            <td class="min-w-1/6 p-2">{{ $tercero->direccion }}</td>
+            <td class="min-w-1/6 p-2">{{ $tercero->email }}</td>
+
+            <td class="min-w-1/6 p-2 text-right">
               <div class="flex flex-row gap-4">
                 <a href="{{ route('terceros.edit', $tercero) }}" class="btn-primary-grid flex items-center gap-1">
                   <flux:icon name="pencil" class="h-4 w-4" />
@@ -82,6 +85,6 @@
   <div class="mt-3">
     {{ $terceros->links('vendor.pagination.tailwind') }}
   </div>
-<x-propios.floating-add-button url="{{ route('terceros.create') }}" />
+  <x-propios.floating-add-button url="{{ route('terceros.create') }}" />
 
 </x-layouts.app>
