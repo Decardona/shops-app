@@ -12,7 +12,7 @@
         <button type="submit" class="btn-secundary">Buscar</button>
       </div>
     </form>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
       {{-- Recorremos los productos y los mostramos en tarjetas --}}
       @foreach ($productos as $producto)
         <div
